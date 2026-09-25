@@ -21,12 +21,6 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      # next.config.ts truncates deploymentId to 32 chars (Next's platform
-      # limit), but Next also requires NEXT_DEPLOYMENT_ID to match that
-      # computed deploymentId exactly wherever it's read — so the env var
-      # itself has to already be pre-truncated, not the full 40-char SHA,
-      # or `vercel build` fails with an E971 mismatch error.
-      - run: echo "NEXT_DEPLOYMENT_ID=${GITHUB_SHA:0:32}" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: 20
