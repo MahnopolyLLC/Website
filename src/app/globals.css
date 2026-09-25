@@ -508,8 +508,8 @@ footer.site-footer .foot-meta-row { display: flex; align-items: flex-start; gap:
 footer.site-footer .foot-hours-line { padding-left: 1.35rem; }
 footer.site-footer .foot-phone { font-weight: 700; font-size: 1.05rem; display: inline-flex; align-items: center; gap: 0.5rem; }
 footer.site-footer .foot-right { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
-footer.site-footer .foot-social { display: flex; justify-content: center; gap: 1.1rem; }
-footer.site-footer .foot-social a { color: #fff; display: inline-flex; opacity: 0.85; transition: opacity 0.2s ease, color 0.2s ease; }
+footer.site-footer .foot-social { display: flex; align-items: center; justify-content: center; gap: 1.1rem; }
+footer.site-footer .foot-social a { color: #fff; display: inline-flex; align-items: center; opacity: 0.85; transition: opacity 0.2s ease, color 0.2s ease; }
 footer.site-footer .foot-social a:hover { opacity: 1; color: var(--red-soft); }
 footer.site-footer .foot-nav {
   display: flex;
