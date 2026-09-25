@@ -21,6 +21,10 @@ create table if not exists listings (
   available_date text,
   description text,
   photos jsonb not null default '[]',
+  -- Staff-only visibility flag, independent of `status` — lets a listing
+  -- be hidden from the public site (tenant moved in, sale closed) without
+  -- losing the record, then unarchived later instead of recreated.
+  archived boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -49,6 +53,8 @@ create table if not exists settings (
   office_phone text,
   office_hours text,
   epoxy_photos jsonb not null default '[]',
+  facebook_url text,
+  instagram_url text,
   constraint settings_singleton check (id = 1)
 );
 insert into settings (id) values (1) on conflict (id) do nothing;

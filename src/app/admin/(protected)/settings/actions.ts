@@ -25,6 +25,8 @@ export async function saveSettings(formData: FormData): Promise<SaveSettingsResu
       .split("\n")
       .map((url) => url.trim())
       .filter(Boolean),
+    facebookUrl: String(formData.get("facebookUrl") || "").trim(),
+    instagramUrl: String(formData.get("instagramUrl") || "").trim(),
   };
 
   const { error } = await updateSettings(supabase, settings);

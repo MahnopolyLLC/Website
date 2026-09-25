@@ -64,6 +64,7 @@ beforeEach(() => {
     available: "2026-09-01",
     description: "",
     photos: [],
+    archived: false,
   });
 });
 

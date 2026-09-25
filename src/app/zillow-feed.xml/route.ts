@@ -81,7 +81,7 @@ export async function GET() {
   // from it. Only rental listings belong here at all (there's no
   // for-sale concept in this feed format); "available" is the only
   // status that should still be live on Zillow.
-  const rentals = listings.filter((l) => l.type === "rental" && l.status === "available");
+  const rentals = listings.filter((l) => l.type === "rental" && l.status === "available" && !l.archived);
 
   const skipped: string[] = [];
   const listingXml = rentals

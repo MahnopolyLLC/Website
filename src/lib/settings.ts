@@ -18,6 +18,10 @@ export interface SiteSettings {
   // column (array of property-photos bucket URLs), just global instead
   // of per-listing. Empty until William uploads real job photos.
   epoxyPhotos: string[];
+  // Footer social icons — same "empty until set, hidden until then"
+  // pattern as the other optional links above.
+  facebookUrl: string;
+  instagramUrl: string;
 }
 
 // Real values, matching William's Facebook business page — used both as
@@ -33,6 +37,10 @@ const FALLBACK_SETTINGS: SiteSettings = {
   officePhone: "(785) 329-6344",
   officeHours: "Mon–Fri hours",
   epoxyPhotos: [],
+  facebookUrl: "https://www.facebook.com/p/MAHnopoly-LLC-100063579943216/",
+  // Not set yet — staff can add it in /admin/settings once the profile
+  // URL is available; the footer icon stays hidden until then.
+  instagramUrl: "",
 };
 
 type SettingsRow = {
@@ -45,6 +53,8 @@ type SettingsRow = {
   office_phone: string | null;
   office_hours: string | null;
   epoxy_photos: string[] | null;
+  facebook_url: string | null;
+  instagram_url: string | null;
 };
 
 function rowToSettings(row: SettingsRow): SiteSettings {
@@ -58,6 +68,8 @@ function rowToSettings(row: SettingsRow): SiteSettings {
     officePhone: row.office_phone || FALLBACK_SETTINGS.officePhone,
     officeHours: row.office_hours || FALLBACK_SETTINGS.officeHours,
     epoxyPhotos: row.epoxy_photos ?? [],
+    facebookUrl: row.facebook_url || FALLBACK_SETTINGS.facebookUrl,
+    instagramUrl: row.instagram_url || FALLBACK_SETTINGS.instagramUrl,
   };
 }
 
@@ -71,7 +83,7 @@ export async function getSettings(): Promise<SiteSettings> {
   const { data, error } = await supabase
     .from("settings")
     .select(
-      "tenant_portal_url, pay_rent_url, maintenance_request_url, uhaul_url, show_tenant_buttons, office_address, office_phone, office_hours, epoxy_photos"
+      "tenant_portal_url, pay_rent_url, maintenance_request_url, uhaul_url, show_tenant_buttons, office_address, office_phone, office_hours, epoxy_photos, facebook_url, instagram_url"
     )
     .eq("id", 1)
     .maybeSingle();
@@ -99,6 +111,8 @@ export async function updateSettings(
       office_phone: settings.officePhone,
       office_hours: settings.officeHours,
       epoxy_photos: settings.epoxyPhotos,
+      facebook_url: settings.facebookUrl,
+      instagram_url: settings.instagramUrl,
     })
     .eq("id", 1);
 }

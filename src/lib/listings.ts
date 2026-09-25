@@ -19,6 +19,11 @@ export interface Listing {
   available: string;
   description: string;
   photos: string[];
+  // Staff-only visibility flag, independent of `status` — set when a
+  // tenant moves in (or a sale closes) to hide the listing from the
+  // public site without deleting it; cleared again ("unarchive") when the
+  // unit is available again, e.g. a tenant moves out.
+  archived: boolean;
   // Optional because the 5 dev-only FALLBACK_LISTINGS below don't carry
   // one — real rows always do (schema.sql's `updated_at`). Only consumer
   // right now is the Zillow feed's required <lastUpdated> (see
@@ -47,6 +52,7 @@ const FALLBACK_LISTINGS: Listing[] = [
     available: "Sept 1",
     description: "",
     photos: [],
+    archived: false,
   },
   {
     id: "burlingame-rd",
@@ -63,6 +69,7 @@ const FALLBACK_LISTINGS: Listing[] = [
     available: "Sept 15",
     description: "",
     photos: [],
+    archived: false,
   },
   {
     id: "indiana-ave",
@@ -79,6 +86,7 @@ const FALLBACK_LISTINGS: Listing[] = [
     available: "—",
     description: "",
     photos: [],
+    archived: false,
   },
   {
     id: "lyman-rd",
@@ -95,6 +103,7 @@ const FALLBACK_LISTINGS: Listing[] = [
     available: "—",
     description: "",
     photos: [],
+    archived: false,
   },
   {
     id: "macvicar-ave",
@@ -111,6 +120,7 @@ const FALLBACK_LISTINGS: Listing[] = [
     available: "—",
     description: "",
     photos: [],
+    archived: false,
   },
 ];
 
@@ -132,6 +142,7 @@ type ListingRow = {
   available_date: string | null;
   description: string | null;
   photos: string[] | null;
+  archived: boolean;
   updated_at: string;
 };
 
@@ -151,12 +162,13 @@ function rowToListing(row: ListingRow): Listing {
     available: row.available_date ?? "—",
     description: row.description ?? "",
     photos: row.photos ?? [],
+    archived: row.archived,
     updatedAt: row.updated_at,
   };
 }
 
 const LISTING_COLUMNS =
-  "id, address, city, zip, neighborhood, type, status, price, beds, baths, pets, available_date, description, photos, updated_at";
+  "id, address, city, zip, neighborhood, type, status, price, beds, baths, pets, available_date, description, photos, archived, updated_at";
 
 export type ListingsLoadResult = {
   listings: Listing[];
@@ -300,4 +312,12 @@ export async function updateListing(
 
 export async function deleteListing(supabase: SupabaseClient, id: string) {
   return supabase.from("listings").delete().eq("id", id);
+}
+
+export async function setListingArchived(
+  supabase: SupabaseClient,
+  id: string,
+  archived: boolean
+) {
+  return supabase.from("listings").update({ archived }).eq("id", id);
 }

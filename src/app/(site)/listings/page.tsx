@@ -23,11 +23,11 @@ export default async function ListingsPage({
     getSettings(),
   ]);
   const telHref = `tel:${settings.officePhone.replace(/[^\d+]/g, "")}`;
-  const rentCount = listings.filter((l) => l.type === "rental" && l.status === "available").length;
-  const saleCount = listings.filter((l) => l.type === "sale" && l.status === "available").length;
+  const rentCount = listings.filter((l) => l.type === "rental" && l.status === "available" && !l.archived).length;
+  const saleCount = listings.filter((l) => l.type === "sale" && l.status === "available" && !l.archived).length;
 
   const items = listings
-    .filter((l) => l.type === type && l.status === "available")
+    .filter((l) => l.type === type && l.status === "available" && !l.archived)
     .sort((a, b) =>
       activeSort === "price"
         ? a.price - b.price

@@ -80,6 +80,32 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         <label htmlFor="officeHours">Office hours</label>
         <input id="officeHours" name="officeHours" type="text" defaultValue={settings.officeHours} />
       </div>
+      <div className="two-col">
+        <div className="form-row">
+          <label htmlFor="facebookUrl">Facebook page URL</label>
+          <input
+            id="facebookUrl"
+            name="facebookUrl"
+            type="url"
+            defaultValue={settings.facebookUrl}
+            placeholder="https://www.facebook.com/…"
+          />
+        </div>
+        <div className="form-row">
+          <label htmlFor="instagramUrl">Instagram profile URL</label>
+          <input
+            id="instagramUrl"
+            name="instagramUrl"
+            type="url"
+            defaultValue={settings.instagramUrl}
+            placeholder="https://www.instagram.com/…"
+          />
+        </div>
+      </div>
+      <p className="form-note" style={{ marginTop: "-0.5rem" }}>
+        Each shows an icon in the site footer once its URL above is set;
+        hidden until then.
+      </p>
 
       <PhotoUpload
         initialPhotos={settings.epoxyPhotos}

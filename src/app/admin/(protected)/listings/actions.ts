@@ -7,6 +7,7 @@ import {
   createListing,
   updateListing,
   deleteListing,
+  setListingArchived,
   type ListingInput,
   type ListingType,
   type ListingStatus,
@@ -105,6 +106,25 @@ export async function deleteListingAction(id: string): Promise<{ ok: boolean; er
   if (error) {
     console.error("deleteListingAction: delete failed", error);
     return { ok: false, error: "Something went wrong deleting this property." };
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/listings");
+  return { ok: true };
+}
+
+export async function setListingArchivedAction(
+  id: string,
+  archived: boolean
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = await getSupabaseAdminClient();
+  if (!supabase) return { ok: false, error: "Not connected to a database yet." };
+
+  const { error } = await setListingArchived(supabase, id, archived);
+  if (error) {
+    console.error("setListingArchivedAction: update failed", error);
+    return { ok: false, error: "Something went wrong updating this property." };
   }
 
   revalidatePath("/admin");
