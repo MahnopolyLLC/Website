@@ -39,7 +39,11 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
         <Link href="/mahtropolis">Mahtropolis</Link>
       </nav>
       <div className="foot-right">
-        {(settings.facebookUrl || settings.instagramUrl) && (
+        <a className="foot-phone" href={telHref}>
+          <PhoneIcon />
+          {settings.officePhone}
+        </a>
+        {(settings.facebookUrl || settings.instagramUrl || settings.xUrl) && (
           <div className="foot-social" aria-label="Follow us">
             {settings.facebookUrl && (
               <a href={settings.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Mahnopoly LLC on Facebook">
@@ -51,12 +55,13 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
                 <InstagramIcon />
               </a>
             )}
+            {settings.xUrl && (
+              <a href={settings.xUrl} target="_blank" rel="noopener noreferrer" aria-label="Mahnopoly LLC on X">
+                <XIcon />
+              </a>
+            )}
           </div>
         )}
-        <a className="foot-phone" href={telHref}>
-          <PhoneIcon />
-          {settings.officePhone}
-        </a>
       </div>
     </footer>
   );
@@ -80,7 +85,7 @@ function PhoneIcon() {
 
 function FacebookIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z" />
     </svg>
   );
@@ -88,10 +93,18 @@ function FacebookIcon() {
 
 function InstagramIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4.2" />
       <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function XIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }

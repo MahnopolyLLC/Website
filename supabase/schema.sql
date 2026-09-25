@@ -55,6 +55,7 @@ create table if not exists settings (
   epoxy_photos jsonb not null default '[]',
   facebook_url text,
   instagram_url text,
+  x_url text,
   constraint settings_singleton check (id = 1)
 );
 insert into settings (id) values (1) on conflict (id) do nothing;

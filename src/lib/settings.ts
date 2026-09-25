@@ -22,6 +22,7 @@ export interface SiteSettings {
   // pattern as the other optional links above.
   facebookUrl: string;
   instagramUrl: string;
+  xUrl: string;
 }
 
 // Real values, matching William's Facebook business page — used both as
@@ -41,6 +42,7 @@ const FALLBACK_SETTINGS: SiteSettings = {
   // Not set yet — staff can add it in /admin/settings once the profile
   // URL is available; the footer icon stays hidden until then.
   instagramUrl: "",
+  xUrl: "",
 };
 
 type SettingsRow = {
@@ -55,6 +57,7 @@ type SettingsRow = {
   epoxy_photos: string[] | null;
   facebook_url: string | null;
   instagram_url: string | null;
+  x_url: string | null;
 };
 
 function rowToSettings(row: SettingsRow): SiteSettings {
@@ -70,6 +73,7 @@ function rowToSettings(row: SettingsRow): SiteSettings {
     epoxyPhotos: row.epoxy_photos ?? [],
     facebookUrl: row.facebook_url || FALLBACK_SETTINGS.facebookUrl,
     instagramUrl: row.instagram_url || FALLBACK_SETTINGS.instagramUrl,
+    xUrl: row.x_url || FALLBACK_SETTINGS.xUrl,
   };
 }
 
@@ -83,7 +87,7 @@ export async function getSettings(): Promise<SiteSettings> {
   const { data, error } = await supabase
     .from("settings")
     .select(
-      "tenant_portal_url, pay_rent_url, maintenance_request_url, uhaul_url, show_tenant_buttons, office_address, office_phone, office_hours, epoxy_photos, facebook_url, instagram_url"
+      "tenant_portal_url, pay_rent_url, maintenance_request_url, uhaul_url, show_tenant_buttons, office_address, office_phone, office_hours, epoxy_photos, facebook_url, instagram_url, x_url"
     )
     .eq("id", 1)
     .maybeSingle();
@@ -113,6 +117,7 @@ export async function updateSettings(
       epoxy_photos: settings.epoxyPhotos,
       facebook_url: settings.facebookUrl,
       instagram_url: settings.instagramUrl,
+      x_url: settings.xUrl,
     })
     .eq("id", 1);
 }

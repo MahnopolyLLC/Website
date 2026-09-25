@@ -101,6 +101,16 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
             placeholder="https://www.instagram.com/…"
           />
         </div>
+        <div className="form-row">
+          <label htmlFor="xUrl">X (Twitter) profile URL</label>
+          <input
+            id="xUrl"
+            name="xUrl"
+            type="url"
+            defaultValue={settings.xUrl}
+            placeholder="https://x.com/…"
+          />
+        </div>
       </div>
       <p className="form-note" style={{ marginTop: "-0.5rem" }}>
         Each shows an icon in the site footer once its URL above is set;
